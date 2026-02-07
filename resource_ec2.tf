@@ -47,6 +47,31 @@ resource "aws_security_group" "ssh" {
   }
 }
 
+resource "aws_security_group" "web" {
+  name   = "web-traffic"
+  vpc_id = data.aws_vpc.selected.id
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  ingress {
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "http-to-ec2"
+  }
+}
+
 resource "aws_instance" "nginx" {
   ami           = data.aws_ami.ubuntu24_arm64.id
   instance_type = "t4g.nano"
@@ -55,6 +80,7 @@ resource "aws_instance" "nginx" {
   subnet_id = data.aws_subnets.public.ids[0]
   vpc_security_group_ids = [
     aws_security_group.ssh.id,
+    aws_security_group.web.id,
   ]
   iam_instance_profile = aws_iam_instance_profile.this.name
 
