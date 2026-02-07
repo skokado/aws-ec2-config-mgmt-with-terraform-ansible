@@ -1,18 +1,21 @@
 ---
 # Nginxサーバー設定プレイブック
-# 実行例: ansible-playbook playbooks/roles/nginx/playbook.yaml
+# 実行例: ansible-playbook playbooks/nginx.yaml
+
 - name: Apply common configuration to Nginx servers
   hosts: nginx
   become: yes
+  tags:
+    - common
   
   roles:
-    - role: ../common
-      tags: common
+    - common
 
 - name: Setup Nginx server
   hosts: nginx
   become: yes
+  tags:
+    - nginx
   
   roles:
-    - role: ../nginx
-      tags: nginx
+    - nginx

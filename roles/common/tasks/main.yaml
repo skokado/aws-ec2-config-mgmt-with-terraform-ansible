@@ -3,7 +3,7 @@
 - name: apt update
   apt:
     update_cache: yes
-    cache_valid_time: 86400
+    cache_valid_time: "{{ apt_cache_valid_time | default(86400) }}"
 
 - name: apt upgrade and clean up
   apt:
@@ -23,11 +23,6 @@
 
 - name: Install common packages
   apt:
-    name:
-      - curl
-      - wget
-      - vim
-      - git
-      - htop
+    name: "{{ common_packages | default(['curl', 'wget', 'vim', 'git', 'htop']) }}"
     state: present
     update_cache: yes
