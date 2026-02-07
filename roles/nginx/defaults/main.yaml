@@ -1,0 +1,15 @@
+---
+# Nginx role のデフォルト変数
+
+# Nginxのパッケージ名
+nginx_package: nginx
+
+# Nginxサービスの状態
+nginx_service_state: started
+nginx_service_enabled: yes
+
+# ファイアウォール設定
+nginx_enable_firewall: yes
+nginx_firewall_ports:
+  - 80
+  - 443

@@ -1,0 +1,24 @@
+---
+# メインプレイブック - すべてのサーバーを管理
+# 実行例: ansible-playbook site.yaml
+# 特定のタグのみ実行: ansible-playbook site.yaml --tags common
+# 特定のホストのみ実行: ansible-playbook site.yaml --limit nginx
+
+- name: Apply common configuration to all servers
+  hosts: all
+  become: yes
+  tags:
+    - common
+  
+  roles:
+    - common
+
+- name: Configure Nginx servers
+  hosts: nginx
+  become: yes
+  tags:
+    - nginx
+    - webservers
+  
+  roles:
+    - nginx

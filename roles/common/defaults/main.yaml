@@ -1,0 +1,13 @@
+---
+# Common role のデフォルト変数
+
+# インストールする共通パッケージ
+common_packages:
+  - curl
+  - wget
+  - vim
+  - git
+  - htop
+
+# apt cache の有効期限（秒）
+apt_cache_valid_time: 86400
