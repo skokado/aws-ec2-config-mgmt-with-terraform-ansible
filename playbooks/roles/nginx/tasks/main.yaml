@@ -1,0 +1,29 @@
+---
+# Nginx固有のタスク
+- name: Install nginx
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+- name: Start and enable nginx service
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
+  notify: restart nginx
+
+- name: Allow HTTP traffic through firewall (if ufw is present)
+  ansible.builtin.ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+  when: ansible_facts['os_family'] == 'Debian'
+  ignore_errors: yes
+
+- name: Allow HTTPS traffic through firewall (if ufw is present)
+  ansible.builtin.ufw:
+    rule: allow
+    port: '443'
+    proto: tcp
+  when: ansible_facts['os_family'] == 'Debian'
+  ignore_errors: yes

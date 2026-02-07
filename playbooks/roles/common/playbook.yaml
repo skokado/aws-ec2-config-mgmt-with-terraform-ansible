@@ -1,0 +1,9 @@
+---
+# 共通設定プレイブック - 全サーバーに適用
+# 実行例: ansible-playbook playbooks/roles/common/playbook.yaml
+- name: Apply common configuration to all servers
+  hosts: all
+  become: yes
+  
+  roles:
+    - common

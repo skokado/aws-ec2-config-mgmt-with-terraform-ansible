@@ -11,3 +11,12 @@ terraform {
     }
   }
 }
+
+provider "aws" {
+  default_tags {
+    tags = {
+      Terraform  = "true"
+      Repository = "https://github.com/skokado/aws-ec2-config-mgmt-with-terraform-ansible"
+    }
+  }
+}
